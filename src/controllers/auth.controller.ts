@@ -38,7 +38,7 @@ export class AuthController {
             const accessToken = await this.authServices.loginUser(data);
             res.status(200).json(accessToken);
         } catch (error) {
-            
+            next(error)
         }
     };
 }
