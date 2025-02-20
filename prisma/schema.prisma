@@ -12,3 +12,35 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+enum Colour {
+  Green
+  Blue
+  Red
+  Pink
+  Purple
+}
+
+model User {
+  id        String    @id @unique @default(cuid())
+  name      String
+  email     String    @unique
+  verified  Boolean?
+  otp       Int?
+  otpExpiry DateTime?
+  colour    Colour    @default(Blue)
+  image     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Message   Message[]
+}
+
+model Message {
+  id        String   @id @unique @default(cuid())
+  text      String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

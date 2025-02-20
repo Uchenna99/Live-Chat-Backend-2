@@ -1,9 +1,31 @@
-import express from "express"
-import { Server } from "socket.io"
+import express from "express";
+import http from "http";
+import { Server } from "socket.io";
 import dotenv from "dotenv"
-import http from "http"
 
 dotenv.config();
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST", "DELETE"],
+    },
+});
+
+io.on("connection", (socket) => {
+    console.log(`Client connected: ${socket.id}`);
+
+    socket.on("message", (message: string) => {
+        console.log(`Message from ${socket.id}: ${message}`);
+        io.emit("message", message);
+    });
+
+    socket.on("disconnect", () => {
+        console.log(`Client disconnected: ${socket.id}`);
+    });
+});
 
 
 const portEnv = process.env.PORT;
@@ -18,12 +40,6 @@ if (isNaN(PORT)) {
     process.exit(1);
 }
 
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
-
-
-
-server.listen(PORT, ()=>{
-    console.log(`Server is running on port: ${PORT}`);
-})
+server.listen(PORT, () => {
+    console.log(`WebSocket server running on port: ${PORT}`);
+});
