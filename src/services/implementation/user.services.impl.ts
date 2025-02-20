@@ -18,7 +18,11 @@ export class UserServicesImpl implements UserServices {
             throw new CustomError(StatusCodes.CONFLICT, "Sorry, this email is already taken");
         }
         const newUser = await db.user.create({
-            data
+            data: {
+                name: data.name,
+                email: data.email,
+                password: await hashPassword(data.password)
+            }
         });
         
         const otp = generateOtp();

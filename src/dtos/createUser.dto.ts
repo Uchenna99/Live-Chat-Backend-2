@@ -5,6 +5,7 @@ export class CreateUserDTO {
 
     @IsNotEmpty()
     @IsString()
+    @Length(3, 25)
     name!: string;
 
     @IsNotEmpty()
