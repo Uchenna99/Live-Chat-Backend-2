@@ -21,16 +21,22 @@ enum Colour {
   Purple
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
   id        String    @id @unique @default(cuid())
   name      String
   email     String    @unique
   password  String
-  verified  Boolean?
+  verified  Boolean?  @default(false)
   otp       String?
   otpExpiry DateTime?
   colour    Colour    @default(Blue)
   image     String?
+  role      Role      @default(USER)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Message   Message[]
