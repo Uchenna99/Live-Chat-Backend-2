@@ -5,6 +5,7 @@ import { CustomError } from "../../utils/customError.utils";
 import { UserServices } from "../user.services";
 import { generateOtp } from "../../utils/otp.utils";
 import { hashPassword } from "../../utils/password.utils";
+import { sendOtpEmail } from "../../otp/emailSetup";
 
 
 
@@ -22,6 +23,23 @@ export class UserServicesImpl implements UserServices {
         
         const otp = generateOtp();
         const hashedOtp = await hashPassword(otp);
+        await sendOtpEmail({
+            to: data.email,
+            subject: "Verify your email",
+            otp: otp,
+        });
+        await db.user.update({
+            where: {email: data.email},
+            data: {
+                otp: hashedOtp,
+                otpExpiry: this.generateOtpExpiration()
+            }
+        });
+    }
+
+
+    generateOtpExpiration() {
+        return new Date(Date.now() + 10 * 60 * 1000);
     }
     
 }
