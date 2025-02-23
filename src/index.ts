@@ -4,32 +4,51 @@ import { Server } from "socket.io";
 import dotenv from "dotenv"
 import userRouter from "./routes/user.routes";
 import authRouter from "./routes/auth.routes";
+import cors from "cors"
 
 dotenv.config();
 
 const app = express();
+app.use(express.json());
+
 const server = http.createServer(app);
 
-app.use(express.json());
+app.use(cors());
 
 app.use("/api/user", userRouter);
 
 app.use("/api/auth", authRouter);
 
+
 const io = new Server(server, {
     cors: {
-        origin: "*",
+        origin: "http://localhost:5173",
         methods: ["GET", "POST", "DELETE"],
+        allowedHeaders: "*",
     },
 });
+
 
 io.on("connection", (socket) => {
     console.log(`Client connected: ${socket.id}`);
 
-    socket.on("message", (message: string) => {
-        console.log(`Message from ${socket.id}: ${message}`);
-        io.emit("message", message);
+    socket.on("join-room", (room: string)=>{
+        console.log(`User ${socket.id} joined ${room}`);
+        socket.join(room);
+    })
+
+    socket.on("message", (room: string, message: string, user: {}) => {
+        console.log(`Message from ${socket.id} to ${room}: ${message}`);
+        io.to(room).emit("message", {message, sender: user});
     });
+
+    socket.on("typing", (user)=>{
+        socket.broadcast.emit("typing", user);
+    })
+
+    socket.on("notTyping", (user)=>{
+        socket.broadcast.emit("notTyping", user);
+    })
 
     socket.on("disconnect", () => {
         console.log(`Client disconnected: ${socket.id}`);
