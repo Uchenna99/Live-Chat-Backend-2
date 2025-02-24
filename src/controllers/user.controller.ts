@@ -26,4 +26,33 @@ export class UserController {
             next(error);
         }
     };
+
+
+    public getAllUsers = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    )=>{
+        try {
+            const allUsers = await this.userServices.getAllUsers();
+            res.status(StatusCodes.CREATED).json(allUsers);
+        } catch (error) {
+            next(error);
+        }
+    };
+
+
+    public getRoomMessages = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    )=>{
+        try {
+            const data = req.body as string;
+            const messages = await this.userServices.getRoomMessages(data);
+            res.status(StatusCodes.CREATED).json(messages);
+        } catch (error) {
+            next(error);
+        }
+    };
 }

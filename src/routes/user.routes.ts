@@ -7,5 +7,7 @@ const userController = new UserController();
 
 userRouter.post("/signup", userController.createUser);
 
+userRouter.post("/signup", userController.createUser);
+
 
 export default userRouter;
