@@ -10,7 +10,7 @@ messageRouter.post("/newMessage", messageController.createMessage);
 
 messageRouter.post("/editMessage", messageController.editMessage);
 
-messageRouter.post("/getMessages", messageController.getMessages);
+messageRouter.get("/getMessages/:room", messageController.getMessages);
 
 
 export default messageRouter;

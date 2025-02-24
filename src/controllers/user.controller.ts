@@ -42,21 +42,6 @@ export class UserController {
     };
 
 
-    public getRoomMessages = async (
-        req: Request,
-        res: Response,
-        next: NextFunction
-    )=>{
-        try {
-            const data = req.body as string;
-            const messages = await this.userServices.getRoomMessages(data);
-            res.status(StatusCodes.CREATED).json(messages);
-        } catch (error) {
-            next(error);
-        }
-    };
-
-
     public getUser = async (
         req: Request,
         res: Response,

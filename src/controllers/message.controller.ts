@@ -32,7 +32,7 @@ export class MessageController {
     )=>{
         try {
             const data = req.body as EditMessageDTO;
-            const editedMessage = this.messageServices.editMessage(data);
+            const editedMessage = await this.messageServices.editMessage(data);
             res.status(200).json(editedMessage);
         } catch (error) {
             next(error);
@@ -45,8 +45,8 @@ export class MessageController {
         next: NextFunction
     )=>{
         try {
-            const room = req.body as string;
-            const messages = this.messageServices.getMessages(room);
+            const room = req.params.room
+            const messages = await this.messageServices.getMessages(room);
             res.status(200).json(messages);
         } catch (error) {
             next(error);

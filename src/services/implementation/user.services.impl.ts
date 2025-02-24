@@ -47,14 +47,6 @@ export class UserServicesImpl implements UserServices {
         const allUsers = await db.user.findMany();
         return allUsers;
     }
-    
-    
-    async getRoomMessages(room: string): Promise<ChatMessage[]> {
-        const messages = await db.chatMessage.findMany({
-            where: {room}
-        });
-        return messages;
-    }
 
 
     async getUser(id: string): Promise<User> {

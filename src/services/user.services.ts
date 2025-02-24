@@ -6,5 +6,4 @@ export interface UserServices {
     createUser (data: CreateUserDTO): Promise<void>;
     getUser (id: string): Promise<User>
     getAllUsers (): Promise<User[]>
-    getRoomMessages (room: string): Promise<ChatMessage[]>
 }
