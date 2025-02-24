@@ -10,6 +10,8 @@ export class MessageServicesImpl implements MessageServices {
     async createMessage(data: MessageDTO): Promise<void> {
         await db.chatMessage.create({ data });
     }
+
+
     async editMessage(data: EditMessageDTO): Promise<ChatMessage> {
         const findMessage = await db.chatMessage.findUnique({
             where: {id: data.messageId}
@@ -23,6 +25,8 @@ export class MessageServicesImpl implements MessageServices {
         });
         return editedMessage;
     }
+
+    
     async getMessages(room: string): Promise<ChatMessage[]> {
         const messages = await db.chatMessage.findMany({
             where: {room}

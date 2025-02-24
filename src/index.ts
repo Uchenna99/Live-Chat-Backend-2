@@ -6,6 +6,7 @@ import userRouter from "./routes/user.routes";
 import authRouter from "./routes/auth.routes";
 import cors from "cors"
 import { JWT_User, WS_User } from "./dtos/createUser.dto";
+import messageRouter from "./routes/message.routes";
 
 dotenv.config();
 
@@ -19,6 +20,8 @@ app.use(cors());
 app.use("/api/user", userRouter);
 
 app.use("/api/auth", authRouter);
+
+app.use("/api/messages", messageRouter);
 
 
 const io = new Server(server, {

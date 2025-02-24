@@ -7,7 +7,11 @@ const userController = new UserController();
 
 userRouter.post("/signup", userController.createUser);
 
-userRouter.post("/signup", userController.createUser);
+userRouter.get("/getAllUsers", userController.getAllUsers);
+
+userRouter.post("/getRoomChats", userController.createUser);
+
+userRouter.post("/getUser/:id", userController.getUser);
 
 
 export default userRouter;

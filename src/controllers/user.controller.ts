@@ -55,4 +55,19 @@ export class UserController {
             next(error);
         }
     };
+
+
+    public getUser = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    )=>{
+        try {
+            const id = req.params.id;
+            const user = await this.userServices.getUser(id);
+            res.status(200).json(user);
+        } catch (error) {
+            next(error);
+        }
+    };
 }
