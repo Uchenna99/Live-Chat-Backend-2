@@ -18,8 +18,8 @@ export class MessageController {
     )=>{
         try {
             const data = req.body as MessageDTO;
-            const newUser = await this.messageServices.createMessage(data);
-            res.status(201).json(newUser);
+            const newMessage = await this.messageServices.createMessage(data);
+            res.status(201).json(newMessage);
         } catch (error) {
             next(error);
         }

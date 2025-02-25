@@ -36,6 +36,7 @@ model User {
   otpExpiry DateTime?
   colour    Colour        @default(Blue)
   image     String?
+  thumbnail String        @default("https://res.cloudinary.com/df6xz7bqp/image/upload/v1740443796/default_user_lppcww.jpg")
   role      Role          @default(USER)
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt

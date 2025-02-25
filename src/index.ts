@@ -7,6 +7,7 @@ import authRouter from "./routes/auth.routes";
 import cors from "cors"
 import { JWT_User, WS_User } from "./dtos/createUser.dto";
 import messageRouter from "./routes/message.routes";
+import { ChatMessage } from "@prisma/client";
 
 dotenv.config();
 
@@ -46,9 +47,9 @@ io.on("connection", (socket) => {
         io.emit("joined-users", userList);
     })
     
-    socket.on("message", (room: string, message: string, user: {}, time: string) => {
-        console.log(`Message from ${socket.id} to ${room}: ${message}`);
-        io.to(room).emit("message", {message, sender: user, time});
+    socket.on("message", (room: string, data: ChatMessage) => {
+        console.log(`Message from ${socket.id} to ${room}: ${data.text}`);
+        io.to(room).emit("message", data);
     });
 
     socket.on("typing", (user)=>{

@@ -67,14 +67,14 @@ export class AuthServicesImpl implements AuthServices {
             throw new CustomError(401, "Invalid email or password");
         }
 
-        const accessToken = this.generateAccessToken(findUser.id, findUser.name, findUser.role);
+        const accessToken = this.generateAccessToken(findUser.id, findUser.name, findUser.role, findUser.thumbnail);
 
         return { accessToken };
     }
 
 
-    generateAccessToken( userId: string, name: string, role: string ): string {
-        return jwt.sign({id: userId, name: name, role: role}, process.env.JWT_SECRET || '')
+    generateAccessToken( userId: string, name: string, role: string, thumb: string ): string {
+        return jwt.sign({id: userId, name: name, role: role, thumbnail: thumb}, process.env.JWT_SECRET || '')
     };
     
 }

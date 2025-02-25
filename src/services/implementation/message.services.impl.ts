@@ -7,8 +7,9 @@ import { db } from "../../config/db.config";
 
 export class MessageServicesImpl implements MessageServices {
 
-    async createMessage(data: MessageDTO): Promise<void> {
-        await db.chatMessage.create({ data });
+    async createMessage(data: MessageDTO): Promise<ChatMessage> {
+        const newMessage = await db.chatMessage.create({ data, include: {user: true} });
+        return newMessage;
     }
 
 
@@ -21,7 +22,8 @@ export class MessageServicesImpl implements MessageServices {
         }
         const editedMessage = await db.chatMessage.update({
             where: {id: findMessage.id},
-            data: {text: data.text}
+            data: {text: data.text},
+            include: {user: true}
         });
         return editedMessage;
     }
@@ -29,7 +31,8 @@ export class MessageServicesImpl implements MessageServices {
     
     async getMessages(room: string): Promise<ChatMessage[]> {
         const messages = await db.chatMessage.findMany({
-            where: {room}
+            where: {room},
+            include: {user: true}
         });
         return messages;
     }
