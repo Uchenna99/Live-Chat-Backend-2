@@ -12,5 +12,7 @@ messageRouter.post("/editMessage", messageController.editMessage);
 
 messageRouter.get("/getMessages/:room", messageController.getMessages);
 
+messageRouter.delete("/delete/:id", messageController.deleteMessage);
+
 
 export default messageRouter;

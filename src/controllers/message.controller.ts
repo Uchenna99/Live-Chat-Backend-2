@@ -52,4 +52,18 @@ export class MessageController {
             next(error);
         }
     };
+
+    public deleteMessage = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    )=>{
+        try {
+            const id = req.params.id;
+            await this.messageServices.deleteMessage(id);
+            res.status(200).json({message: 'Message deleted'});
+        } catch (error) {
+            next(error);
+        }
+    }
 }

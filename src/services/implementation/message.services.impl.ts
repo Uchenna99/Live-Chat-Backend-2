@@ -6,7 +6,7 @@ import { db } from "../../config/db.config";
 
 
 export class MessageServicesImpl implements MessageServices {
-
+    
     async createMessage(data: MessageDTO): Promise<ChatMessage> {
         const newMessage = await db.chatMessage.create({ data, include: {user: true} });
         return newMessage;
@@ -27,7 +27,7 @@ export class MessageServicesImpl implements MessageServices {
         });
         return editedMessage;
     }
-
+    
     
     async getMessages(room: string): Promise<ChatMessage[]> {
         const messages = await db.chatMessage.findMany({
@@ -35,6 +35,19 @@ export class MessageServicesImpl implements MessageServices {
             include: {user: true}
         });
         return messages;
+    }
+
+
+    async deleteMessage(id: string): Promise<void> {
+        const findMessage = await db.chatMessage.findUnique({
+            where: {id}
+        });
+        if(!findMessage) {
+            throw new Error('Message not found');
+        }
+        await db.chatMessage.delete({
+            where: {id}
+        })
     }
 
 }

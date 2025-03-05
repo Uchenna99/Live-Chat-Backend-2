@@ -7,4 +7,5 @@ export interface MessageServices {
     createMessage (data: MessageDTO): Promise<ChatMessage>;
     editMessage (data: EditMessageDTO): Promise<ChatMessage>;
     getMessages (room: string): Promise<ChatMessage[]>;
+    deleteMessage (id: string): Promise<void>;
 }
