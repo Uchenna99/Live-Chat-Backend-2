@@ -8,7 +8,7 @@ const messageController = new MessageController();
 
 messageRouter.post("/newMessage", messageController.createMessage);
 
-messageRouter.post("/editMessage", messageController.editMessage);
+messageRouter.patch("/editMessage", messageController.editMessage);
 
 messageRouter.get("/getMessages/:room", messageController.getMessages);
 

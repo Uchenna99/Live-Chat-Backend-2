@@ -60,6 +60,14 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("notTyping", user);
     })
 
+    socket.on("edit-message", (room, id, text)=>{
+        io.to(room).emit("edited-message", id, text);
+    })
+
+    socket.on("delete-Message", (room, id)=>{
+        io.to(room).emit("deleted-Message", id);
+    })
+
     socket.on("disconnect", () => {
         console.log(`Client disconnected: ${socket.id}`);
         const userIndex = userList.findIndex((user)=> user.socketId === socket.id);

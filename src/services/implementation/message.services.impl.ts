@@ -22,7 +22,10 @@ export class MessageServicesImpl implements MessageServices {
         }
         const editedMessage = await db.chatMessage.update({
             where: {id: findMessage.id},
-            data: {text: data.text},
+            data: {
+                text: data.text,
+                edited: true
+            },
             include: {user: true}
         });
         return editedMessage;
