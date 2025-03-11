@@ -35,6 +35,7 @@ export class MessageServicesImpl implements MessageServices {
     async getMessages(room: string): Promise<ChatMessage[]> {
         const messages = await db.chatMessage.findMany({
             where: {room},
+            orderBy: {createdAt:'asc'},
             include: {user: true}
         });
         return messages;

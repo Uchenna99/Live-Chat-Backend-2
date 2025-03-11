@@ -60,8 +60,8 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("notTyping", user);
     })
 
-    socket.on("edit-message", (room, id, text)=>{
-        io.to(room).emit("edited-message", id, text);
+    socket.on("edit-message", (room, message)=>{
+        io.to(room).emit("edited-message", message);
     })
 
     socket.on("delete-Message", (room, id)=>{
