@@ -24,6 +24,10 @@ app.use("/api/auth", authRouter);
 
 app.use("/api/messages", messageRouter);
 
+app.get("/", (req: express.Request, res: express.Response) => {
+  res.send("Welcome to the backend server");
+});
+
 
 const io = new Server(server, {
     cors: {
