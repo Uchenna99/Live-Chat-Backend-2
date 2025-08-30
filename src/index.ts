@@ -95,9 +95,9 @@ if (isNaN(PORT)) {
     process.exit(1);
 }
 
-// server.listen(PORT, () => {
-//     console.log(`WebSocket server running on port: ${PORT}`);
-// });
+server.listen(PORT, () => {
+    console.log(`WebSocket server running on port: ${PORT}`);
+});
 
 
 export default app;
